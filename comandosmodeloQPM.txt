@@ -1,0 +1,252 @@
+		!!!!	BLOQUE DE LA CURVA IS: 
+
+
+! transition_equations
+L_GDP_GAP=b1*LGDP_GAP{-1}-b2*MCI+b3*L_GDP_RW_GAP+SHK_L_GDP_GAP;
+MCI_b4*RR_GAP+(1-b4)*(-L_Z_GAP);
+L_GDP=L_GDP_GAP+L_GDP_BAR
+
+
+! transition_variables
+L_GDP_GAP
+MCI
+L_GDP_RW_GAP
+RR_GAP
+L_Z_GAP
+L_GDP
+L_GDP_BAR
+
+
+! transition_shocks
+SHK_L_GDP_GAP
+
+
+! parameters
+b1
+b2
+b3
+b4
+
+
+! measuremen_variables
+OBS_L_GDP
+
+
+!measurement_equation
+OBS_L_GDP=L_GDP
+
+
+
+	!!!! BLOQUE DE LA CURVA DE PHILLIPS
+
+! transition_equations
+L_GDP_GAP=b1*LGDP_GAP{-1}-b2*MCI+b3*L_GDP_RW_GAP+SHK_L_GDP_GAP;
+MCI_b4*RR_GAP+(1-b4)*(-L_Z_GAP);
+L_GDP=L_GDP_GAP+L_GDP_BAR
+
+
+DLA_CPI=a1*DLA_CPI{-1}+{1-a1}*DLA_CPI{+1}+a2*RMC+SHK_DLA_CPI;
+RMC=a3*L_GDP_GAP+(1-a3)*L_Z_GAP;
+E_DLA_CPI=DLA_CPI{+}+DLA_CPI/4
+
+
+	! transition_variables
+L_GDP_GAP
+MCI
+L_GDP_RW_GAP
+RR_GAP
+L_Z_GAP
+L_GDP
+L_GDP_BAR
+
+DLA_CPI
+RMC
+
+
+
+! transition_shocks
+SHK_L_GDP_GAP
+
+SHK_DLA_CPI
+
+
+! parameters
+b1, b2, b3, b4
+
+a1, a2, a3
+
+
+! measuremen_variables
+OBS_L_GDP
+
+OBS_DLA_CPI
+
+!measurement_equation
+OBS_L_GDP=L_GDP
+
+OBS_DLA_CPI=L_DlA_CPI
+
+
+
+!!!! BLOQUE DE LA PARIDAD DE INTERES DESCUBIERTA
+
+! transition_equations
+L_GDP_GAP=b1*LGDP_GAP{-1}-b2*MCI+b3*L_GDP_RW_GAP+SHK_L_GDP_GAP;
+MCI_b4*RR_GAP+(1-b4)*(-L_Z_GAP);
+L_GDP=L_GDP_GAP+L_GDP_BAR
+
+
+DLA_CPI=a1*DLA_CPI{-1}+{1-a1}*DLA_CPI{+1}+a2*RMC+SHK_DLA_CPI;
+RMC=a3*L_GDP_GAP+(1-a3)*L_Z_GAP;
+E_DLA_CPI=DLA_CPI{+}+DLA_CPI/4
+
+L_RS=g1*L_RS{-1}+((1-g1)(L_RS_NEUTRAL+g2(E(DLA_CPI{N}/4)))+g3*L_GDP_GAP)+SHK_L_RS
+L_S=(1-e1)*E(L_S{+1}+e1((L_S{-1}+2(L_CPI_TAR-L_RW_CPI_TAR+Δ_L_Z))/4)+((L_RW_RS-L_RS+PREM)/4)+SHK_L_S
+L_RSNEUTRAL=L_RR+E(DLA_CPI{N}/4)
+
+
+
+
+	! transition_variables
+L_GDP_GAP
+MCI
+L_GDP_RW_GAP
+RR_GAP
+L_Z_GAP
+L_GDP
+L_GDP_BAR
+
+DLA_CPI
+RMC
+
+L_S
+L_CPI_TAR
+L_RW_CPI_TAR
+L_RW_RS
+L_RS
+L_RSNEUTRAL
+PREM
+
+
+! transition_shocks
+SHK_L_GDP_GAP
+
+SHK_DLA_CPI
+
+SHK_L_RS
+
+
+! parameters
+b1, b2, b3, b4
+
+a1, a2, a3
+
+g1. g2, g3
+
+
+
+! measuremen_variables
+OBS_L_GDP
+
+OBS_DLA_CPI
+
+OBS_L_S
+
+!measurement_equation
+OBS_L_GDP=L_GDP
+
+OBS_DLA_CPI=L_DlA_CPI
+
+OBS_L_S=L_S
+
+
+
+!!!! BLOQUE DE POLITICA MONETARIA
+
+! transition_equations
+L_GDP_GAP=b1*LGDP_GAP{-1}-b2*MCI+b3*L_GDP_RW_GAP+SHK_L_GDP_GAP;
+MCI_b4*RR_GAP+(1-b4)*(-L_Z_GAP);
+L_GDP=L_GDP_GAP+L_GDP_BAR
+
+
+DLA_CPI=a1*DLA_CPI{-1}+{1-a1}*DLA_CPI{+1}+a2*RMC+SHK_DLA_CPI;
+RMC=a3*L_GDP_GAP+(1-a3)*L_Z_GAP;
+E_DLA_CPI=DLA_CPI{+}+DLA_CPI/4
+
+L_RS=g1*L_RS{-1}+((1-g1)(L_RS_NEUTRAL+g2(E(DLA_CPI{N}/4)))+g3*L_GDP_GAP)+SHK_L_RS
+L_S=(1-e1)*E(L_S{+1}+e1((L_S{-1}+2(L_CPI_TAR-L_RW_CPI_TAR+Δ_L_Z))/4)+((L_RW_RS-L_RS+PREM)/4)+SHK_L_S
+L_RSNEUTRAL=L_RR+E(DLA_CPI{N}/4)
+
+L_RW_GDP_GAP=ρ*L_RW_GDP_GAP*L_RW_GDP_GAP{-1}+SHK_L_RW_GDP_GAP
+L_RW_S=ρ_L_RW_S*L_RW_S{-1}*(1-ρ_L_RW_S)+(RR_RW_BAR+DLA_RW_CPI)+SHK_L_RW
+RR_RW=L_RW_S-DLA_RW_CPI
+RR_RW_BAR= ρ_RR_RW_BAR*RR_RW_BAR{-1}+(1-ρ_RR_RW_BAR)*RR_RW_BAR_SS+SHK_RR_RW_BAR
+RR_RW_GAP=RR_RW_GAP-RR_RW_BAR
+DLA_RW_CPI=ρ_DLA_RW_CPI*DLA_RW_CPI{-1}+(1-ρ_DLA_RW_CPI)*DLA_RW_CPI_SS+SHK_DLA_RW_CPI
+
+	! transition_variables
+L_GDP_GAP
+MCI
+L_GDP_RW_GAP
+RR_GAP
+L_Z_GAP
+L_GDP
+L_GDP_BAR
+
+DLA_CPI
+RMC
+
+L_S
+L_CPI_TAR
+L_RW_CPI_TAR
+L_RW_RS
+L_RS
+L_RSNEUTRAL
+PREM
+
+L_RW_GDP_GAP
+L_RW_S
+RR_RW
+RR_RW_BAR
+RR_RW_GAP
+
+
+! transition_shocks
+SHK_L_GDP_GAP
+
+SHK_DLA_CPI
+
+SHK_L_RS
+
+SHK_L_RW_GDP_GAP
+
+
+! parameters
+b1, b2, b3, b4
+
+a1, a2, a3
+
+g1. g2, g3
+
+ρ
+
+
+! measuremen_variables
+OBS_L_GDP
+
+OBS_DLA_CPI
+
+OBS_L_S
+
+OBS_L_RW_GDP_GAP
+
+
+!measurement_equation
+OBS_L_GDP=L_GDP
+
+OBS_DLA_CPI=L_DlA_CPI
+
+OBS_L_S=L_S
+
+OBS_L_RW_GDP_GAP=L_RW_GDP_GAP
+
